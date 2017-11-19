@@ -1,0 +1,521 @@
+
+/* 通用 */
+.layout-header {
+    height: 48px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+}
+.layout-header .container {
+    width: 100%;
+}
+.layout-body {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+/**/
+.tool-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 240px;
+    bottom: 0;
+    padding: 16px;
+    border-right: 1px solid #ccc;
+    .title {
+        font-size: 16px;
+        margin: 8px 0;
+    }
+}
+.tool-list .btn {
+    width: 40px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+/* 工作空间 */
+.workplace-box {
+    position: absolute;
+    top: 0;
+    left: 240px;
+    right: 360px;
+    bottom: 0;
+    background-color: #f9f9f9;
+    overflow: auto;
+    .workplace {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 800px;
+        height: 800px;
+        border: 1px solid #eee;
+        overflow: hidden;
+    }
+}
+.drawboard {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 500px;
+    height: 500px;
+    background: #fff url("/static/img/canvas-bg.jpg");
+    border-radius: 4px;
+    box-shadow: 1px 1px 4px #999;
+    cursor: url("/static/img/cursor.gif") 2 2,crosshair;
+    overflow: hidden;
+    .canvas {
+        position: absolute;
+        border: none;
+        border-radius: 4px;
+    }
+    .back-img {
+        position: relative;
+        width: 500px;
+        height: 500px;
+        &:before {
+            content: '';
+            margin: 0 auto;
+            display: block;
+            background: #fff;
+            width: 520px;
+            height: 500px;
+            border-radius: 4px;
+            box-shadow: 1px -1px 4px #999;
+            position: absolute;
+            -webkit-transform: rotate(-1deg);
+            top: 5px;
+            left: -5px;
+            z-index: 1;
+        }
+        &:after {
+            content: '';
+            margin: 0 auto;
+            display: block;
+            background: #fff;
+            width: 520px;
+            height: 500px;
+            box-shadow: 1px -1px 4px #999;
+            position: absolute;
+            -webkit-transform: rotate(3deg);
+            border-radius: 4px;
+            top: 10px;
+            left: -10px;
+            z-index: 1;
+        }
+    }
+
+}
+
+/* 颜色选择 */
+.color-list {
+    overflow: auto;
+}
+.color-item {
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin-right: 6px;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    cursor: pointer;
+    &.active {
+        border-color: #09c;
+    }
+}
+/**/
+.save-demo {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    display: none;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ccc;
+}
+
+.position {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    color: #999;
+}
+.description {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    color: #999;
+}
+.board-box {
+    position: fixed;
+    bottom: 50px;
+    display: none;
+    left: 50px;
+    width: 200px;
+    height: 200px;
+}
+.board-svg {
+    color: #f00;
+    border: 1px solid #f00;
+    background-color: #f00;
+}
+.board-box {
+    .board {
+        width: 100%;
+        height: 100%;
+    }
+    li {
+        position: absolute;
+        width: 40px;
+        height: 24px;
+        border-radius: 40px / 24px;
+        cursor: pointer;
+    }
+    .color1 {
+        top: 30px;
+        right: 30px;
+        transform: rotate(10deg);
+    }
+    .color2 {
+        top: 30px;
+        right: 85px;
+        transform: rotate(-10deg);
+    }
+    .color3 {
+        top: 60px;
+        right: 130px;
+        transform: rotate(-40deg);
+    }
+    .color4 {
+        top: 110px;
+        right: 150px;
+        transform: rotate(-100deg);
+    }
+    .current-color {
+        position: absolute;
+        top: 100px;
+        right: 60px;
+        width: 60px;
+        height: 36px;
+        border-radius: 60px / 36px;
+        transform: rotate(-40deg);
+        cursor: pointer;
+    }
+}
+.layer-box {
+    display: none;
+    width: 200px;
+}
+.layer-list {
+}
+.layer-item {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    &.active {
+        border-color: #09c;
+        background-color: #f1f1f1;
+    }
+    canvas {
+        float: left;
+        width: 56px;
+        height: 56px;
+        margin-right: 8px;
+        background: #fff url("/static/img/canvas-bg.jpg");
+        border: 1px solid #999;
+    }
+    .visiable {
+        float: left;
+        margin-right: 8px;
+    }
+    .type {
+        color: #999;
+    }
+    .draw-icon {
+        color: #999;
+        font-size: 24px;
+    }
+}
+/* 钢笔工具 */
+.pen-tools {
+    display: none;
+}
+
+/* 剪切 */
+.cut-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 9000;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.cut-overlay-top {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100px;
+    background-color: #000;
+    opacity: .5;
+}
+.cut-overlay-left {
+    position: absolute;
+    top: 100px;
+    width: 100px;
+    height: 100%;
+    background-color: #000;
+    opacity: .5;
+}
+.cut-overlay-right {
+    position: absolute;
+    top: 100px;
+    right: 0;
+    left: 200px;
+    height: 100%;
+    background-color: #000;
+    opacity: .5;
+}
+.cut-overlay-bottom {
+    position: absolute;
+    top: 200px;
+    bottom: 0;
+    right: 0;
+    left: 100px;
+    background-color: #000;
+    opacity: .5;
+}
+.ui-cut {
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    z-index: 10000;
+    width: 100px;
+    height: 100px;
+    border: 1px dashed #00bbcc;
+    .line1 {
+        position: absolute;
+        top: 33.33%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px dashed #00bbcc;
+    }
+    .line2 {
+        position: absolute;
+        top: 66.66%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px dashed #00bbcc;
+    }
+    .line3 {
+        position: absolute;
+        top: 0;
+        left: 33.33%;
+        width: 1px;
+        height: 100%;
+        border-right: 1px dashed #00bbcc;
+    }
+    .line4 {
+        position: absolute;
+        top: 0;
+        left: 66.66%;
+        width: 1px;
+        height: 100%;
+        border-right: 1px dashed #00bbcc;
+    }
+}
+/* 新建 */
+.new-dialog {
+    display: none;
+    width: 350px;
+}
+
+/* 打开 */
+.open-dialog {
+    display: none;
+    width: 600px;
+}
+.file-list {
+    margin-bottom: 16px;
+    overflow: hidden;
+    .list-item {
+        float: left;
+        width: 100px;
+        height: 150px;
+        margin-right: 8px;
+        border: 1px solid #eee;
+    }
+    .img {
+        width: 100%;
+        height: 100%;
+    }
+}
+.open-dialog {
+    .drop-box {
+        padding: 36px;
+        border: 1px dashed #999;
+    }
+    .tip {
+
+    }
+}
+/**/
+.color-dialog {
+    display: none;
+    width: 300px;
+}
+.pencil-dialog {
+    position: absolute;
+    z-index: 10000;
+    display: none;
+    width: 300px;
+    height:300px;
+}
+
+/* 工具栏 */
+.edit-tool {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 360px;
+    background-color: #fff;
+    border-left: 1px solid #ccc;
+    .form-groups {
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 16px;
+    }
+    .title {
+        padding-left: 8px;
+        margin-bottom: 16px;
+        font-size: 16px;
+        border-left: 2px solid #09c;
+    }
+    .tip {
+        color: #999;
+    }
+    .hr {
+        width: 100%;
+        height: 1px;
+        margin: 16px 0;
+        background-color: #eee;
+    }
+    .tab-content {
+        position: absolute;
+        top: 40px;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 16px;
+        overflow: auto;
+    }
+    .form-group {
+        padding: 0px 0;
+        // TODO
+        &:before,
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    }
+    .control-label {
+        float: left;
+        width: 72px;
+        margin-right: 10%;
+        text-align: left;
+    }
+    .form-control,
+    .minicolors {
+        position: relative;
+        float: left;
+        width: 40%;
+    }
+    .minicolors .form-control {
+        width: 100%;
+    }
+    .btn {
+        margin-bottom: 8px;
+    }
+    .edidtor-bg-display {
+        width: 100px;
+        height: 56px;
+        margin: 10px 0;
+        background-size: 100% 100%;
+        border: 1px solid #eee;
+    }
+}
+/**/
+.text-box {
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    z-index: 10000;
+    display: none;
+    /*width: 80px;
+    height: 80px;*/
+    border: 1px dotted #09c;
+    background-color: #f1f1f1;
+    .input {
+
+    }
+}
+/**/
+.play-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    .mask-left {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 240px;
+        height: 400px;
+        background-color: rgba(0, 0, 0, .2);
+    }
+    .mask-right {
+        position: absolute;
+        top: 80px;
+        right: 0;
+        left: 800px;
+        height: 400px;
+        background-color: rgba(0, 0, 0, .2);
+    }
+    .mask-top{
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 80px;
+        background-color: rgba(0, 0, 0, .2);
+    }
+    .mask-bottom{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        top: 400px;
+        background-color: rgba(0, 0, 0, .2);
+    }
+    .control {
+        position: absolute;
+        right: 16px;
+        bottom: 16px;
+        width: 320px;
+        height: 100px;
+        background-color: #fff;
+    }
+    .play-box-close {
+        display: block;
+        margin: 16px;
+        color: #666;
+    }
+}

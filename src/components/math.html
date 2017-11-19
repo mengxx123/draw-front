@@ -1,0 +1,288 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>在线画板数学版</title>
+    <link rel="stylesheet" href="/asset/lib/eui/1.3/ui.min.css">
+    <link rel="stylesheet" href="asset/lib/minicolors/jquery.minicolors.css">
+    <link rel="stylesheet" href="asset/icon/iconfont.css">
+    <link rel="stylesheet" href="asset/lib/colorpicker/css/bootstrap-colorpicker.min.css">
+    <link rel="stylesheet" href="math.css">
+</head>
+
+<body>
+<!-- 头部 -->
+<header class="layout-header navbar navbar-light navbar-h5" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Draw</a>
+        </div>
+        <div id="navbar-collapse" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-layoutit">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        文件 <i class="icon icon-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a id="open" href="#">打开</a></li>
+                        <li><a id="new" href="#">新建</a></li>
+                        <li><a id="save" href="#"><!--<i class="draw-icon draw-icon-save"></i>--> 保存</a></li>
+                        <li><a id="download" href="#" download="picture.png"><!--<i class="draw-icon draw-icon-download"></i>--> 下载</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        窗口 <i class="icon icon-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a id="layer" href="#">图层</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        帮助 <i class="icon icon-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a id="help" href="help.html" target="_blank">帮助</a></li>
+                        <!--<li><a id="version" href="#">版本介绍</a></li>-->
+                        <li><a id="about" href="#">关于</a></li>
+                    </ul>
+                </li>
+                <!--<li class="nav-item"><a class="nav-link" href="">链接</a> </li>
+                <li class="nav-item navbar-form">
+                    <button id="insert-text" class="btn btn-info" href="#undo">文字</button>
+                    <button id="insert-img" class="btn btn-info" href="#undo"><i class="glyphicon glyphicon-arrow-left"></i> 图片</button>
+                    <button id="insert-shape" class="btn btn-info" href="#undo">形状</button>
+                </li>-->
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="/" target="_blank">更多工具</a>
+                </li>
+
+                <!--<li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        更多 <i class="caret"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="#">我的作品</a></li>
+                        <li><a href="#">我的收藏</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">退出</a></li>
+                    </ul>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+</header>
+<!-- /头部 -->
+<div class="layout-body">
+    <div id="tool-box" class="tool-box">
+        <h4 class="title">常用</h4>
+        <div class="tool-list">
+            <button class="btn btn-default active" data-type="coor" type="button" data-toggle="tooltip" title="选择工具"><i class="draw-icon draw-icon-pointer"></i></button>
+            <button class="btn btn-default" data-type="m-move" type="button" data-toggle="tooltip" title="移动工具"><i class="draw-icon draw-icon-hand"></i></button>
+            <button class="btn btn-default" data-type="text" type="button" data-toggle="tooltip" title="文字"><i class="draw-icon draw-icon-text"></i></button>
+            <button class="btn btn-default" data-type="straw" type="button" data-toggle="tooltip" title="取色"><i class="draw-icon draw-icon-straw"></i></button>
+        </div>
+        <h4 class="title">画笔</h4>
+        <div class="tool-list">
+            <button class="btn btn-default" data-type="pencil" type="button" data-toggle="tooltip" title="铅笔"><i class="draw-icon draw-icon-pencil"></i></button>
+        </div>
+        <h4 class="title">图形</h4>
+        <div class="tool-list">
+            <button class="btn btn-default" data-type="m-point" type="button" data-toggle="tooltip" title="点">·</button>
+            <button class="btn btn-default" data-type="line" type="button" data-toggle="tooltip" title="直线"><i class="draw-icon draw-icon-line"></i></button>
+            <button class="btn btn-default" data-type="round" type="button" data-toggle="tooltip" title="圆"><i class="draw-icon draw-icon-round"></i></button>
+            <button class="btn btn-default" data-type="rect" type="button" data-toggle="tooltip" title="矩形"><i class="draw-icon draw-icon-rect"></i></button>
+            <button class="btn btn-default" data-type="ellipse" type="button" data-toggle="tooltip" title="椭圆"><i class="draw-icon draw-icon-ellipse"></i></button>
+        </div>
+        <h4 class="title">其他</h4>
+        <div class="tool-list">
+        </div>
+        <!--<h4 class="title">开发中</h4>
+        <div class="tool-list">
+            <button class="btn btn-default" data-type="hand" type="button" data-toggle="tooltip" title="移动"><i class="draw-icon draw-icon-hand"></i></button>
+            <button class="btn btn-default" data-type="vague_eraser" type="button" data-toggle="tooltip" title="模糊橡皮擦"><i class="draw-icon draw-icon-eraser"></i></button>
+            <button class="btn btn-default" data-type="brush" type="button" data-toggle="tooltip" title="喷枪"><i class="draw-icon draw-icon-pencel"></i></button>
+            <button class="btn btn-default" data-type="ink" type="button" data-toggle="tooltip" title="墨水笔"><i class="draw-icon draw-icon-pencel"></i></button>
+
+            <a id="select2" class="btn btn-default" data-toggle="tooltip" title="选择"><i class="draw-icon draw-icon-save"></i></a>
+            <a id="rotate" class="btn btn-default" data-toggle="tooltip" title="旋转"><i class="draw-icon draw-icon-save"></i></a>
+            <a id="resize" class="btn btn-default" data-toggle="tooltip" title="调整大小"><i class="draw-icon draw-icon-save"></i></a>
+            <a id="small" class="btn btn-default" data-toggle="tooltip" title="缩小"><i class="draw-icon draw-icon-save"></i></a>
+        </div>-->
+    </div>
+    <div id="workplace-box" class="workplace-box">
+        <div id="drawboard" class="drawboard"></div>
+    </div>
+    <div class="edit-tool">
+        <ul id="tool-tab" class="nav nav-tabs">
+            <div class="nav-item active"><a id="tab-style" class="nav-link" href="#tab11" data-toggle="tab">编辑</a></div>
+            <div class="nav-item"><a class="nav-link" href="#tab12" data-toggle="tab">效果</a></div>
+            <div class="nav-item"><a id="tab-index" class="nav-link" href="#tab13" data-toggle="tab">画布</a></div>
+        </ul>
+        <div class="tab-content">
+            <div id="tab11" class="tab-pane fade active in">
+                <div class="form-horizontal">
+                    <div class="form-groups">
+                        <h4 class="title">工具</h4>
+                        <div class="btn-group">
+                            <a id="undo" class="btn btn-default" data-toggle="tooltip" title="撤销"><i class="draw-icon draw-icon-undo"></i></a>
+                            <a id="redo" class="btn btn-default" data-toggle="tooltip" title="重做"><i class="draw-icon draw-icon-redo"></i></a>
+                            <a id="clear" class="btn btn-default" data-toggle="tooltip" title="清除"><i class="draw-icon draw-icon-clear"></i></a>
+                        </div>
+                    </div>
+                    <div id="regular-box" class="form-groups ui-hide">
+                        <h4 class="title">常规</h4>
+                        <div class="form-group">
+                            <label class="control-label">名称</label>
+                            <input id="editor-name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">定义</label>
+                            <input id="editor-define" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"></label>
+                            <button id="editor-remove" class="btn btn-default">删除</button>
+                        </div>
+                    </div>
+                    <div class="form-groups">
+                        <h4 class="title">画笔</h4>
+                        <div class="form-group">
+                            <label class="control-label">大小</label>
+                            <div id="paint-width" style="width: 210px"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">透明度</label>
+                            <div id="paint-opacity" style="width: 210px"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab12" class="tab-pane fade">
+                <div class="form-horizontal">
+                    <div class="form-groups">
+                        <h4 class="title">滤镜和调整</h4>
+                        <div class="form-group">
+                            <label class="control-label">滤镜</label>
+                            <select id="filter" class="form-control">
+                                <option value="blur">无</option>
+                                <optgroup label="效果">
+                                    <option value="blur">模糊</option>
+                                    <option value="relief">浮雕</option>
+                                    <option value="mirror">水平翻转（镜像）</option>
+                                    <option value="fliph">垂直翻转</option>
+                                    <option value="mosaic">马赛克</option>
+                                </optgroup>
+                                <optgroup label="其他">
+                                    <option value="grayLigtness">明度灰</option>
+                                    <option value="grayLuminosity">亮度灰</option>
+                                    <option value="grayLuminosity">平均亮度</option>
+                                    <option value="sepiaTone">棕褐色灰度图（老照片效果）</option>
+                                    <option value="swapChannels">修改颜色通道的顺序</option>
+                                    <option value="monoColor">mono</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">调整</label>
+                            <select id="filter3" class="form-control">
+                                <option value="blur">无</option>
+                                <option value="invert">反相（反色）</option>
+                                <option value="gray">去色（灰度）</option>
+                            </select>
+                        </div>
+                        <!--<div>
+                            <span>混合模式</span>
+                            <select id="filter2">
+                                <option value="blur">正常</option>
+                                <option value="dissolve">溶解</option>
+                                <optgroup label="变暗">
+                                    <option value="multiply">正片叠底</option>
+                                    <option value="colorBurn">颜色加深</option>
+                                </optgroup>
+                                <optgroup label="变亮">
+                                    <option value="linearDodge">线性减淡</option>
+                                </optgroup>
+                                <optgroup label="饱和度">
+                                    <option value="softLight">柔光</option>
+                                </optgroup>
+                                <optgroup label="差集">
+                                    <option value="difference">差值</option>
+                                </optgroup>
+                                <optgroup label="颜色">
+                                </optgroup>
+                            </select>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+            <div id="tab13" class="tab-pane fade">
+                <div class="form-horizontal">
+                    <div class="form-groups">
+                        <h4 class="title">画布属性</h4>
+                        <div class="form-group">
+                            <label class="control-label">画布宽度</label>
+                            <div id="editor-canvas-width" class="form-control-static">500px</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">画布高度</label>
+                            <div id="editor-canvas-height" class="form-control-static">500px</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="h5-container">
+    <div class="workplace">
+
+    </div>
+</div>
+
+<div id="position" class="position">(0, 0)</div>
+<div class="description">画板鼠标右键，选择图片另存为可导出图片。</div>
+<img id="save-test" class="save-demo">
+<div class="board-box">
+    <img class="board" src="asset/img/board.svg">
+    <ul id="board-color" class="board-color">
+        <li id="board-color4" class="color1" style="background-color: #80FF00" data-color="#80FF00"></li>
+        <li id="board-color3" class="color2" style="background-color: #00FFFF" data-color="#00FFFF"></li>
+        <li id="board-color2" class="color3" style="background-color: #808080" data-color="#808080"></li>
+        <li id="board-color1" class="color4" style="background-color: #408080" data-color="#408080"></li>
+    </ul>
+    <div id="current-color" class="current-color" style="background-color: #000"></div>
+</div>
+<ul id="color-list" class="color-list">
+    <li class="color-item active" style="background-color: #000" data-color="#000"></li>
+    <li class="color-item" style="background-color: #f00" data-color="#f00"></li>
+    <li class="color-item" style="background-color: #80FF00" data-color="#80FF00"></li>
+    <li class="color-item" style="background-color: #00FFFF" data-color="#00FFFF"></li>
+    <li class="color-item" style="background-color: #808080" data-color="#808080"></li>
+    <li class="color-item" style="background-color: #FF8000" data-color="#FF8000"></li>
+    <li class="color-item" style="background-color: #408080" data-color="#408080"></li>
+    <li class="color-item" style="background-color: #8000FF" data-color="#8000FF"></li>
+    <li class="color-item" style="background-color: #CCCC00" data-color="#CCCC00"></li>
+</ul>
+<script src="asset/lib/jquery/jquery-1.10.2.min.js"></script>
+<script src="/asset/lib/eui/1.3/ui.min.js"></script>
+<script src="asset/lib/mousewheel/jquery.mousewheel.min.js"></script>
+<script src="asset/lib/minicolors/jquery.minicolors.min.js"></script>
+<script src="asset/lib/colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<script src="color.js"></script>
+<script src="draw.js"></script>
+<script src="draw-plugins.js"></script>
+<script src="math.js"></script>
+<script src="math-plugins.js"></script>
+</body>
+</html>
