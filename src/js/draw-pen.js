@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // https://github.com/jareguo/curve-editor
 // 钢笔插件
 (function ($) {

@@ -28,10 +28,11 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                                窗口 <i class="icon icon-down"></i>
+                                功能 <i class="icon icon-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li><a id="layer" href="#">图层</a></li>
+                                <li><a href="#" @click.prevent="showFilterDialog">滤镜</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -39,14 +40,18 @@
                                 帮助 <i class="icon icon-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="#" @click="help">帮助</a></li>
+                                <li>
+                                    <router-link to="/help" target="_blank">帮助</router-link>
+                                </li>
+                                <li>
+                                    <a href="#" @click.prevent="quickHelp">快速导航</a>
+                                </li>
                                 <!--<li><a id="version" href="#">版本介绍</a></li>-->
                                 <li><a id="about" href="#">关于</a></li>
+                                <li>
+                                    <a href="http://tool.yunser.com" target="_blank">更多工具</a>
+                                </li>
                             </ul>
-                        </li>
-                        <li class="nav-item navbar-form">
-                            <button id="quick-help" class="btn btn-info" href="#">快速导航</button>
-                            <button class="btn btn-info" @click="test">测试</button>
                         </li>
                         <!--<li class="nav-item"><a class="nav-link" href="">链接</a> </li>
                         <li class="nav-item navbar-form">
@@ -56,10 +61,6 @@
                         </li>-->
                     </ul>
                     <ul class="nav navbar-nav pull-right">
-                        <li class="nav-item">
-                            <a class="nav-link" href="http://tool.yunser.com" target="_blank">更多工具</a>
-                        </li>
-
                         <!--<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
                                 更多 <i class="caret"></i>
@@ -95,7 +96,7 @@
                     <button class="btn btn-default" data-type="liuye" type="button" data-toggle="tooltip" title="柳叶笔"><i class="draw-icon draw-icon-pen3"></i></button>
                     <button class="btn btn-default" data-type="paint_bucket" type="button" data-toggle="tooltip" title="颜料桶"><i class="draw-icon draw-icon-bucket"></i></button>
                 </div>
-                <h4 class="title">图形</h4>
+                <h4 class="title">形状</h4>
                 <div class="tool-list">
                     <button class="btn btn-default" data-type="line" type="button" data-toggle="tooltip" title="直线"><i class="draw-icon draw-icon-line"></i></button>
                     <button class="btn btn-default" data-type="round" type="button" data-toggle="tooltip" title="圆"><i class="draw-icon draw-icon-round"></i></button>
@@ -150,146 +151,90 @@
                     <!--<div class="back-img"></div>-->
                 </div>
             </div>
-            <div class="edit-tool">
-                <ul id="tool-tab" class="nav nav-tabs">
-                    <div class="nav-item active"><a id="tab-style" class="nav-link" href="#tab11" data-toggle="tab">编辑</a></div>
-                    <div class="nav-item"><a class="nav-link" href="#tab12" data-toggle="tab">效果</a></div>
-                    <div class="nav-item"><a id="tab-index" class="nav-link" href="#tab13" data-toggle="tab">画布</a></div>
-                </ul>
-                <div class="tab-content">
-                    <div id="tab11" class="tab-pane fade active in">
-                        <div class="form-horizontal">
-                            <div class="form-groups">
-                                <h4 class="title">工具</h4>
-                                <div class="btn-group bootstro"  data-bootstro-step='3' data-bootstro-width="200px" data-bootstro-title="" data-bootstro-content="点击回放按钮，可以回顾作图过程哦" data-bootstro-placement="left">
-                                    <a id="undo" class="btn btn-default" data-toggle="tooltip" title="撤销"><i class="draw-icon draw-icon-undo"></i></a>
-                                    <a id="redo" class="btn btn-default" data-toggle="tooltip" title="重做"><i class="draw-icon draw-icon-redo"></i></a>
-                                    <a id="clear" class="btn btn-default" data-toggle="tooltip" title="清除"><i class="draw-icon draw-icon-clear"></i></a>
-                                    <a id="play" class="btn btn-default" data-toggle="tooltip" title="回放"><i class="draw-icon draw-icon-play"></i></a>
+            <ui-drawer class="edit-box" :open="true" right :docked="true" @close="toggle()">
+                <div class="edit-tool">
+                    <ul id="tool-tab" class="nav nav-tabs">
+                        <div class="nav-item active"><a id="tab-style" class="nav-link" href="#tab11" data-toggle="tab">编辑</a></div>
+                        <div class="nav-item"><a id="tab-index" class="nav-link" href="#tab13" data-toggle="tab">画布</a></div>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab11" class="tab-pane fade active in">
+                            <div class="form-horizontal">
+                                <div class="form-groups">
+                                    <h4 class="title">工具</h4>
+                                    <div class="btn-group bootstro"  data-bootstro-step='3' data-bootstro-width="200px" data-bootstro-title="" data-bootstro-content="点击回放按钮，可以回顾作图过程哦" data-bootstro-placement="left">
+                                        <a id="undo" class="btn btn-default" data-toggle="tooltip" title="撤销"><i class="draw-icon draw-icon-undo"></i></a>
+                                        <a id="redo" class="btn btn-default" data-toggle="tooltip" title="重做"><i class="draw-icon draw-icon-redo"></i></a>
+                                        <a id="clear" class="btn btn-default" data-toggle="tooltip" title="清除"><i class="draw-icon draw-icon-clear"></i></a>
+                                        <a id="play" class="btn btn-default" data-toggle="tooltip" title="回放"><i class="draw-icon draw-icon-play"></i></a>
+                                    </div>
+                                    <div id="pen-tools" class="pen-tools">
+                                        <div class="title">钢笔工具</div>
+                                        <div id="pen-list" class="btn-group">
+                                            <button id="pen-draw" class="btn btn-default active" type="button" data-toggle="tooltip" title="钢笔工具"><i class="draw-icon draw-icon-pen"></i></button>
+                                            <button id="pen-point" class="btn btn-default" type="button" data-toggle="tooltip" title="锚点工具"><i class="draw-icon draw-icon-pen"></i></button>
+                                            <button id="pen-delete" class="btn btn-default" type="button" data-toggle="tooltip" title="删除锚点工具"><i class="draw-icon draw-icon-pen"></i></button>
+                                            <button id="pen-add" class="btn btn-default" type="button" data-toggle="tooltip" title="添加锚点工具"><i class="draw-icon draw-icon-pen"></i></button>
+                                            <button id="pen-move" class="btn btn-default" type="button" data-toggle="tooltip" title="移动锚点工具"><i class="draw-icon draw-icon-pen"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div id="pen-tools" class="pen-tools">
-                                    <div class="title">钢笔工具</div>
-                                    <div id="pen-list" class="btn-group">
-                                        <button id="pen-draw" class="btn btn-default active" type="button" data-toggle="tooltip" title="钢笔工具"><i class="draw-icon draw-icon-pen"></i></button>
-                                        <button id="pen-point" class="btn btn-default" type="button" data-toggle="tooltip" title="锚点工具"><i class="draw-icon draw-icon-pen"></i></button>
-                                        <button id="pen-delete" class="btn btn-default" type="button" data-toggle="tooltip" title="删除锚点工具"><i class="draw-icon draw-icon-pen"></i></button>
-                                        <button id="pen-add" class="btn btn-default" type="button" data-toggle="tooltip" title="添加锚点工具"><i class="draw-icon draw-icon-pen"></i></button>
-                                        <button id="pen-move" class="btn btn-default" type="button" data-toggle="tooltip" title="移动锚点工具"><i class="draw-icon draw-icon-pen"></i></button>
+                                <div class="form-groups">
+                                    <h4 class="title">画笔</h4>
+                                    <div class="form-group">
+                                        <label class="control-label">大小</label>
+                                        <ui-slider class="my-slider" v-model="strokeWidth" :min="1" :max="300" :step="1" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">透明度</label>
+                                        <ui-slider class="my-slider" v-model="paintOpacity" :min="1" :max="100" :step="1" />
+                                    </div>
+                                </div>
+                                <div class="form-groups">
+                                    <h4 class="title">颜色</h4>
+                                    <div class="form-group">
+                                        <label class="control-label">颜色</label>
+                                        <input id="editor-color" class="form-control" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <ul id="color-list" class="color-list">
+                                            <li class="color-item" style="background-color: #000" data-color="#000"></li>
+                                            <li class="color-item" style="background-color: #f00" data-color="#f00"></li>
+                                            <li class="color-item" style="background-color: #80FF00" data-color="#80FF00"></li>
+                                            <li class="color-item" style="background-color: #00FFFF" data-color="#00FFFF"></li>
+                                            <li class="color-item" style="background-color: #808080" data-color="#808080"></li>
+                                            <li class="color-item" style="background-color: #FF8000" data-color="#FF8000"></li>
+                                            <li class="color-item" style="background-color: #408080" data-color="#408080"></li>
+                                            <li class="color-item" style="background-color: #8000FF" data-color="#8000FF"></li>
+                                            <li class="color-item" style="background-color: #CCCC00" data-color="#CCCC00"></li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-groups">
-                                <h4 class="title">画笔</h4>
-                                <div class="form-group">
-                                    <label class="control-label">大小</label>
-                                    <div id="paint-width" style="width: 210px"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">透明度</label>
-                                    <div id="paint-opacity" style="width: 210px"></div>
-                                </div>
-                            </div>
-                            <div class="form-groups">
-                                <h4 class="title">颜色</h4>
-                                <div class="form-group">
-                                    <label class="control-label">颜色</label>
-                                    <input id="editor-color" class="form-control" type="text">
-                                </div>
-                                <div class="form-group">
-                                    <ul id="color-list" class="color-list">
-                                        <li class="color-item" style="background-color: #000" data-color="#000"></li>
-                                        <li class="color-item" style="background-color: #f00" data-color="#f00"></li>
-                                        <li class="color-item" style="background-color: #80FF00" data-color="#80FF00"></li>
-                                        <li class="color-item" style="background-color: #00FFFF" data-color="#00FFFF"></li>
-                                        <li class="color-item" style="background-color: #808080" data-color="#808080"></li>
-                                        <li class="color-item" style="background-color: #FF8000" data-color="#FF8000"></li>
-                                        <li class="color-item" style="background-color: #408080" data-color="#408080"></li>
-                                        <li class="color-item" style="background-color: #8000FF" data-color="#8000FF"></li>
-                                        <li class="color-item" style="background-color: #CCCC00" data-color="#CCCC00"></li>
-                                    </ul>
-                                </div>
-                            </div>
                         </div>
-                    </div>
-                    <div id="tab12" class="tab-pane fade">
-                        <div class="form-horizontal">
-                            <div class="form-groups">
-                                <h4 class="title">滤镜和调整</h4>
-                                <div class="form-group">
-                                    <label class="control-label">滤镜</label>
-                                    <select id="filter" class="form-control">
-                                        <option value="blur">无</option>
-                                        <optgroup label="效果">
-                                            <option value="blur">模糊</option>
-                                            <option value="relief">浮雕</option>
-                                            <option value="mirror">水平翻转（镜像）</option>
-                                            <option value="fliph">垂直翻转</option>
-                                            <option value="mosaic">马赛克</option>
-                                        </optgroup>
-                                        <optgroup label="其他">
-                                            <option value="grayLigtness">明度灰</option>
-                                            <option value="grayLuminosity">亮度灰</option>
-                                            <option value="grayLuminosity">平均亮度</option>
-                                            <option value="sepiaTone">棕褐色灰度图（老照片效果）</option>
-                                            <option value="swapChannels">修改颜色通道的顺序</option>
-                                            <option value="monoColor">mono</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">调整</label>
-                                    <select id="filter3" class="form-control">
-                                        <option value="blur">无</option>
-                                        <option value="invert">反相（反色）</option>
-                                        <option value="gray">去色（灰度）</option>
-                                    </select>
-                                </div>
-                                <!--<div>
-                                    <span>混合模式</span>
-                                    <select id="filter2">
-                                        <option value="blur">正常</option>
-                                        <option value="dissolve">溶解</option>
-                                        <optgroup label="变暗">
-                                            <option value="multiply">正片叠底</option>
-                                            <option value="colorBurn">颜色加深</option>
-                                        </optgroup>
-                                        <optgroup label="变亮">
-                                            <option value="linearDodge">线性减淡</option>
-                                        </optgroup>
-                                        <optgroup label="饱和度">
-                                            <option value="softLight">柔光</option>
-                                        </optgroup>
-                                        <optgroup label="差集">
-                                            <option value="difference">差值</option>
-                                        </optgroup>
-                                        <optgroup label="颜色">
-                                        </optgroup>
-                                    </select>
-                                </div>-->
-                            </div>
-                        </div>
-                    </div>
-                    <div id="tab13" class="tab-pane fade">
-                        <div class="form-horizontal">
-                            <div class="form-groups">
-                                <h4 class="title">画布属性</h4>
-                                <div class="form-group">
-                                    <label class="control-label">画布宽度</label>
-                                    <div id="editor-canvas-width" class="form-control-static">500px</div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">画布高度</label>
-                                    <div id="editor-canvas-height" class="form-control-static">500px</div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">背景颜色</label>
-                                    <input id="editor-bg-color" class="form-control" type="text">
+                        <div id="tab13" class="tab-pane fade">
+                            <div class="form-horizontal">
+                                <div class="form-groups">
+                                    <h4 class="title">画布属性</h4>
+                                    <div class="form-group">
+                                        <label class="control-label">画布宽度</label>
+                                        <div id="editor-canvas-width" class="form-control-static">500px</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">画布高度</label>
+                                        <div id="editor-canvas-height" class="form-control-static">500px</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">背景颜色</label>
+                                        <input id="editor-bg-color" class="form-control" type="text">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </ui-drawer>
+            
         </div>
         <div id="text-box" class="text-box">
             <input id="text-box-input" class="input">
@@ -364,10 +309,16 @@
         </div>
         <div id="open-dialog" class="open-dialog">
             <ul id="file-list" class="file-list">
-                <li class="list-item"><a class="link" href="#"><img class="img" src="/static/img/demo1.jpg"></a>  </li>
+                <li class="list-item" v-for="file in files">
+                    <a class="link" href="#">
+                        <img class="img" :src="file">
+                    </a>
+                </li>
+
+                <!-- <li class="list-item"><a class="link" href="#"><img class="img" src="/static/img/demo1.jpg"></a>  </li>
                 <li class="list-item"><a class="link" href="#"><img class="img" src="/static/img/demo2.png"></a>  </li>
                 <li class="list-item"><a class="link" href="#"><img class="img" src="/static/img/demo3.jpg"></a>  </li>
-                <li class="list-item"><a class="link" href="#"><img class="img" src="/static/img/demo5.jpg"></a>  </li>
+                <li class="list-item"><a class="link" href="#"><img class="img" src="/static/img/demo5.jpg"></a>  </li> -->
             </ul>
             <div id="drop-box" class="drop-box">
                 <button id="open-dialog-file" class="btn btn-primary" type="button">选择文件</button>
@@ -412,20 +363,157 @@
                 </div>
             </div>
         </div>
-
+        <ui-dialog :open="dialog" title="Alert Dialog">
+            只有点击确定按钮才可以关闭对话框
+                <ui-flat-button label="确定" slot="actions" primary @click="close"/>
+        </ui-dialog>
+        <ui-drawer class="filter-box" :open="filterBoxVisible" right :docked="false" @close="toggle()">
+            <ui-appbar title="滤镜">
+                <ui-icon-button icon="close" slot="left" @click="filterBoxVisible = false" />
+            </ui-appbar>
+            <ul class="filter-list">
+                <li class="item" v-for="filter in filters" @click="setFilter(filter)">
+                    <a class="link" href="#">
+                        <img :src="filter.preview">
+                        <div class="text">{{ filter.text }}</div>
+                    </a>
+                </li>
+            </ul>
+        </ui-drawer>
+        <!-- <label class="control-label">滤镜</label>
+                                    <label class="control-label">调整</label> -->
+                                <!--<div>
+                                    <span>混合模式</span>
+                                    <select id="filter2">
+                                        <option value="blur">正常</option>
+                                        <option value="dissolve">溶解</option>
+                                        <optgroup label="变暗">
+                                            <option value="multiply">正片叠底</option>
+                                            <option value="colorBurn">颜色加深</option>
+                                        </optgroup>
+                                        <optgroup label="变亮">
+                                            <option value="linearDodge">线性减淡</option>
+                                        </optgroup>
+                                        <optgroup label="饱和度">
+                                            <option value="softLight">柔光</option>
+                                        </optgroup>
+                                        <optgroup label="差集">
+                                            <option value="difference">差值</option>
+                                        </optgroup>
+                                        <optgroup label="颜色">
+                                        </optgroup>
+                                    </select>
+                                </div>-->
     </div>
 </template>
 
 <script>
+    /* eslint-disable */
+
     export default {
         data () {
             return {
+                dialog: false,
+                files: [
+                    '/static/img/demo1.jpg',
+                    '/static/img/demo2.png',
+                    '/static/img/demo3.jpg',
+                    '/static/img/demo5.jpg'
+                ],
+                filterBoxVisible: false,
+                strokeWidth: 1,
+                paintOpacity: 100,
+                filters: [
+                    {
+                        name: 'none',
+                        text: '无',
+                        preview: '/static/img/filter/none.png'
+                    },
+                    {
+                        name: 'blur',
+                        text: '模糊',
+                        preview: '/static/img/filter/blur.png'
+                    },
+                    {
+                        name: 'relief',
+                        text: '浮雕',
+                        preview: '/static/img/filter/relief.png'
+                    },
+                    {
+                        name: 'mirror',
+                        text: '水平翻转（镜像）',
+                        preview: '/static/img/filter/mirror.png'
+                    },
+                    {
+                        name: 'fliph',
+                        text: '垂直翻转',
+                        preview: '/static/img/filter/fliph.png'
+                    },
+                    // {
+                    //     text: '马赛克',
+                    //     name: 'mosaic',
+                    //     preview: '/static/img/filter/none.png'
+                    // },
+                    {
+                        name: 'grayLigtness',
+                        text: '明度灰',
+                        preview: '/static/img/filter/grayLigtness.png'
+                    },
+                    {
+                        name: 'grayLuminosity',
+                        text: '亮度灰',
+                        preview: '/static/img/filter/grayLigtness.png'
+                    },
+                    {
+                        name: 'grayLuminosity2',
+                        text: '平均亮度',
+                        preview: '/static/img/filter/grayLigtness.png'
+                    },
+                    {
+                        name: 'sepiaTone',
+                        text: '老照片效果',
+                        // text: '棕褐色灰度图',
+                        preview: '/static/img/filter/sepiaTone.png'
+                    },
+                    {
+                        name: 'swapChannels',
+                        text: '通道顺序',
+                        preview: '/static/img/filter/swapChannels.png'
+                    },
+                    {
+                        name: 'monoColor',
+                        text: 'mono',
+                        preview: '/static/img/filter/mono.png'
+                    },
+                    {
+                        name: 'invert',
+                        text: '反相（反色）',
+                        preview: '/static/img/filter/invert.png'
+                    },
+                    {
+                        name: 'gray',
+                        text: '去色（灰度）',
+                        preview: '/static/img/filter/gray.png'
+                    }
+                ]
             }
         },
         mounted() {
             this.init()
         },
+        destroyed() {
+            this.db.destroy()
+        },
         methods: {
+            toggle(flag) {
+                this.filterBoxVisible = !this.filterBoxVisible
+            },
+            open() {
+                this.dialog = true
+            },
+            close() {
+                this.dialog = false
+            },
             help() {
                 this.$router.push('/help')
             },
@@ -434,95 +522,62 @@
                     width: 500,
                     height: 500,
                     log: true // 默认保存操作记录
-                });
-                db.loadStorage();
-                db.usePlugin('pencil');
-                db.dropImage();
-                //db.canvasSize(800, 800);
-                db.setWidth(2);
-                //db.setOpacity(0.5);
+                })
+                this.db = db
+                db.loadStorage()
+                db.usePlugin('pencil')
+                db.dropImage()
+                //db.canvasSize(800, 800)
+                db.setWidth(2)
+                db.setEraserWidth(5) // TODO
+                //db.setOpacity(0.5)
                 setTimeout(function () {
-                    //showLayer();
-                }, 1000);
+                    //showLayer()
+                }, 1000)
 
                 // 保存
                 $('#save').on('click', function () {
-                    db.save();
-                    ui.msg('本地保存成功');
-                });
+                    db.save()
+                    ui.msg('本地保存成功')
+                })
 
                 // 快捷键支持
                 $(document).on('keydown', function (e) {
                     if (e.ctrlKey) {
-                        //ui.msg(e.keyCode);
+                        //ui.msg(e.keyCode)
                         switch (e.keyCode) {
                             case 83: // s
-                                db.save();
-                                ui.msg('保存成功');
-                                return false;
+                                db.save()
+                                ui.msg('保存成功')
+                                return false
                             case 89: // y
-                                db.redo();
-                                return false;
+                                db.redo()
+                                return false
                             case 90: // z
-                                db.undo();
-                                return false;
+                                db.undo()
+                                return false
                         }
                     } else {
                         switch (e.keyCode) {
                             case 32: // blank
-                                ui.msg('移动成功');
-                                return false;
+                                ui.msg('移动成功')
+                                return false
                         }
                     }
-                });
+                })
 
                 $(document).on('keyup', function (e) {
                     switch (e.keyCode) {
                         case 32: // blank
-                            //ui.msg('移动成功');
-                            return false;
+                            //ui.msg('移动成功')
+                            return false
                     }
-                });
+                })
 
                 // 清除
                 $('#clear').on('click', function () {
-                    db.clear();
-                });
-
-                // 画笔大小
-                $('#paint-width').range({
-                    value: 1,
-                    min: 1,
-                    max: 300,
-                    step: 1
-                }).on('slide', function (e) {
-                    var width = e.value;
-                    if (width == 0) {
-                        width = 1;
-                    }
-                    db.setWidth(width);
-                });
-
-                // 画笔透明度
-                $('#paint-opacity').range({
-                    value: 1,
-                    min: 0.01,
-                    max: 1,
-                    step: 0.01
-                }).on('slide', function (e) {
-                    var opacity = e.value;
-                    db.setOpacity(opacity);
-                });
-
-
-                /*$('#paint-width').on('change', function () {
-                 var width = $(this).val();
-                 if (width == 0) {
-                 width = 1;
-                 }
-                 db.setWidth(width);
-
-                 });*/
+                    db.clear()
+                })
 
                 $('#eraser-width').range({
                     value: 1,
@@ -530,212 +585,212 @@
                     max: 300,
                     step: 1
                 }).on('slide', function (e) {
-                    var width = e.value;
+                    var width = e.value
                     if (width == 0) {
-                        width = 1;
+                        width = 1
                     }
-                    db.setEraserWidth(width);
-                });
+                    db.setEraserWidth(width)
+                })
                 /*$('#eraser-width').on('change', function () {
-                 var width = $(this).val();
-                 db.setEraserWidth(width);
+                 var width = $(this).val()
+                 db.setEraserWidth(width)
                  });*/
 
                 $('#resize').on('click', function () {
-                    db.canvasSize(800, 800);
-                });
+                    db.canvasSize(800, 800)
+                })
 
                 // 工具栏选择
                 $('#tool-box').selectable({
                     item: '.btn'
-                });
+                })
                 $(document).on('click', '[data-type]', function () {
-                    var type = $(this).data('type');
-                    db.usePlugin(type);
-                });
+                    var type = $(this).data('type')
+                    db.usePlugin(type)
+                })
 
                 $('#drop-box')[0].addEventListener('drop', function (e) {
-                    e.stopPropagation();
-                    e.preventDefault();
+                    e.stopPropagation()
+                    e.preventDefault()
 
                     var fileList = e.dataTransfer.files;　　//获取拖拽文件
                     db.loadImageFile(fileList[0]); // 这里只取拖拽的第一个，实际中你可以遍历处理file列表
-                    $('#open-dialog').dialog('hide');
-                }, false);
+                    $('#open-dialog').dialog('hide')
+                }, false)
                 $('#drop-box')[0].addEventListener('dragover', function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                }, false);
+                    e.stopPropagation()
+                    e.preventDefault()
+                }, false)
                 $('#file-list').on('click', '.link', function () {
-                    var img = $(this).find('img')[0];
-                    db.open(img);
-                    $('#open-dialog').dialog('hide');
-                });
+                    var img = $(this).find('img')[0]
+                    db.open(img)
+                    $('#open-dialog').dialog('hide')
+                })
                 $('#open-dialog-file').on('click', function () {
-                    var $fileInput = $('<input type="file">');
-                    $(document.body).append($fileInput);
+                    var $fileInput = $('<input type="file">')
+                    $(document.body).append($fileInput)
                     $fileInput.on('change', function () {
                         if ($(this).val()) {
+                            console.log('有数据')
                             var fileList = this.files;　　//获取拖拽文件
-                            db.loadImageFile(fileList[0]);
-                            $('#open-dialog').dialog('hide');
+                            db.loadImageFile(fileList[0])
+                            $('#open-dialog').dialog('hide')
                         }
-                    });
-                    $fileInput.hide();
-                    $fileInput.trigger('click');
-                });
+                    })
+                    $fileInput.hide()
+                    $fileInput.trigger('click')
+                })
                 $('#open').on('click', function (e) {
-                    e.preventDefault();
+                    e.preventDefault()
                     $('#open-dialog').dialog({
                         title: '打开',
                         btn: false
-                    });
-                });
+                    })
+                })
 
                 $('#new').on('click', function (e) {
-                    e.preventDefault();
+                    e.preventDefault()
 
                     $('#new-dialog').dialog({
                         title: '新建',
                         btn: false
-                    });
+                    })
 
                     $('#new-dialog-ok').one('click', function (e) {
-                        e.preventDefault();
+                        e.preventDefault()
 
-                        var width = $('#new-dialog-width').val() || 500;
-                        var height = $('#new-dialog-height').val() || 500;
-                        var bg = $('#new-dialog-bg').val();
-                        $('#new-dialog').dialog('hide');
-                        db.new(width, height, bg);
-                    });
-                });
+                        var width = $('#new-dialog-width').val() || 500
+                        var height = $('#new-dialog-height').val() || 500
+                        var bg = $('#new-dialog-bg').val()
+                        $('#new-dialog').dialog('hide')
+                        db.new(width, height, bg)
+                    })
+                })
 
                 $('#undo').on('click', function () {
-                    db.undo();
-                });
+                    db.undo()
+                })
 
                 $('#redo').on('click', function () {
-                    db.redo();
-                });
+                    db.redo()
+                })
 
                 $('#download').on('click', function () {
-                    db.save();
-                });
+                    db.save()
+                })
 
                 $('#rotate').on('click', function () {
-                    db.rotate();
-                });
+                    db.rotate()
+                })
 
                 $('#small').on('click', function () {
-                    db.small();
-                });
+                    db.small()
+                })
 
                 // 滤镜和调整
                 $('#filter,#filter3').on('change', function () {
-                    var filerName = $(this).val();
+                    var filerName = $(this).val()
                     switch (filerName) {
                         case 'asd':
-                            break;
+                            break
                         default:
-                            db.filter(filerName);
-                            break;
+                            db.filter(filerName)
+                            break
                     }
-                });
+                })
 
                 // 混合模式
                 $('#filter2').on('change', function () {
-                    var filerName = $(this).val();
+                    var filerName = $(this).val()
                     switch (filerName) {
                         case 'asd':
-                            break;
+                            break
                         default:
-                            db.filter2(filerName);
-                            break;
+                            db.filter2(filerName)
+                            break
                     }
-                });
+                })
 
                 $('#play').on('click', function () {
                     if (db.isPlaying) {
-                        db.cancelPlay();
+                        db.cancelPlay()
                     } else {
-                        db.play();
-                        $('#play-box').show();
-                        var rect = document.getElementById('drawboard').getBoundingClientRect();
+                        db.play()
+                        $('#play-box').show()
+                        var rect = document.getElementById('drawboard').getBoundingClientRect()
                         $('#mask-left').css({
                             width: rect.left,
                             top: rect.top,
                             height: rect.height
-                        });
+                        })
                         $('#mask-top').css({
                             height: rect.top
-                        });
+                        })
                         $('#mask-bottom').css({
                             top: rect.top + rect.height
-                        });
+                        })
                         $('#mask-right').css({
                             top: rect.top,
                             height: rect.height,
                             left: rect.left + rect.width
-                        });
-                        console.log(rect);
+                        })
+                        console.log(rect)
                     }
 
-                });
+                })
 
                 // 颜料板
                 $('#board').draggable({
                     containment: window
-                });
+                })
 
-                var colors = ['#000', '#80FF00', '#00FFFF', '#808080', '#408080'];
+                var colors = ['#000', '#80FF00', '#00FFFF', '#808080', '#408080']
 
                 function selectColor(color) {
-                    db.setColor(color);
-                    $('#current-color').css('background-color', color);
+                    db.setColor(color)
+                    $('#current-color').css('background-color', color)
 
                 }
 
-
                 $('#board-color').on('click', '[data-color]', function () {
-                    var color = $(this).data('color');
-                    selectColor(color);
-                });
+                    var color = $(this).data('color')
+                    selectColor(color)
+                })
 
                 // 背景颜色
                 $('#editor-color').colorpicker({
                     //color: '#000000',
                     format: 'hex',
                 }).on('changeColor', function (e) {
-                    db.setColor(e.color.toHex());
-                    //selectColor(e.color.toHex());
-                });
-                $('#editor-color').colorpicker('setValue', '#000');
+                    db.setColor(e.color.toHex())
+                    //selectColor(e.color.toHex())
+                })
+                $('#editor-color').colorpicker('setValue', '#000')
 
                 $('#editor-bg-color').colorpicker({
                     //color: '#000000',
                     format: 'hex',
                 }).on('changeColor', function (e) {
-                    db.setBgColor(e.color.toHex());
-                    //selectColor(e.color.toHex());
-                });
-                $('#editor-bg-color').colorpicker('setValue', '#fff');
+                    db.setBgColor(e.color.toHex())
+                    //selectColor(e.color.toHex())
+                })
+                $('#editor-bg-color').colorpicker('setValue', '#fff')
 
                 // 颜色选择
                 $('#color-list').on('click', '.color-item', function() {
-                    var color = $(this).data('color');
-                    db.setColor(color);
-                    $('#editor-color').colorpicker('setValue', color);
+                    var color = $(this).data('color')
+                    db.setColor(color)
+                    $('#editor-color').colorpicker('setValue', color)
 
-                    /*selectColor(color);
-                     $('#color-list').dialog('hide');
-                     colors.unshift(color);
-                     colors.pop();
+                    /*selectColor(color)
+                     $('#color-list').dialog('hide')
+                     colors.unshift(color)
+                     colors.pop()
                      for (var i = 1; i <= 4; i++) {
                      $('#board-color' + i).css('background-color', colors[i])
-                     .attr('data-color', colors[i]);
+                     .attr('data-color', colors[i])
                      }*/
-                });
+                })
 
                 //#current-color
                 $('#color-dialog').colorpicker({
@@ -743,61 +798,61 @@
                     format: 'rgb',
                     container: '#color-dialog'
                 }).on('changeColor', function (e) {
-                    selectColor(e.color.toHex());
-                });
+                    selectColor(e.color.toHex())
+                })
                 $('#current-color').on('click', function () {
                     $('#color-dialog').dialog({
                         btn: false
-                    });
+                    })
                     /*$('#color-list').dialog({
                      title: '选择颜色',
                      shadeClose: true
                      });*/
-                });
+                })
 
-                $("[data-toggle='tooltip']").tooltip();
+                $("[data-toggle='tooltip']").tooltip()
 
                 // 图层
                 $('#layer-list').selectable({
                     item: '.layer-item',
                     selected: function(event, item) {
-                        var layer = $(item).data('layer');
-                        db.setLayer(layer);
-                        updateLayer();
+                        var layer = $(item).data('layer')
+                        db.setLayer(layer)
+                        updateLayer()
                     }
-                });
+                })
                 $('#layer-list').on('click', '.visiable', function () {
-                    var layer = $(this).parent().data('layer');
+                    var layer = $(this).parent().data('layer')
                     if (db.layers[layer - 1].visibility) {
-                        $(this).parent().find('.draw-icon-visible').removeClass('draw-icon-visible').addClass('draw-icon-invisible');
-                        db.layers[layer - 1].hide();
+                        $(this).parent().find('.draw-icon-visible').removeClass('draw-icon-visible').addClass('draw-icon-invisible')
+                        db.layers[layer - 1].hide()
                     } else {
-                        $(this).parent().find('.draw-icon-invisible').removeClass('draw-icon-invisible').addClass('draw-icon-visible');
-                        db.layers[layer - 1].show();
+                        $(this).parent().find('.draw-icon-invisible').removeClass('draw-icon-invisible').addClass('draw-icon-visible')
+                        db.layers[layer - 1].show()
                     }
-                });
+                })
                 // 添加图层
                 $('#add-layer').on('click', function (e) {
-                    e.preventDefault();
-                    db.addLayer();
-                });
+                    e.preventDefault()
+                    db.addLayer()
+                })
                 // 删除图层
                 $('#delete-layer').on('click', function (e) {
-                    e.preventDefault();
-                    db.removeLayer(db.curLayer);
-                });
+                    e.preventDefault()
+                    db.removeLayer(db.curLayer)
+                })
 
 
-                $('#drawboard').css('background-color', '#fff');
-                $('#drawboard').css('background-image', 'none');
+                $('#drawboard').css('background-color', '#fff')
+                $('#drawboard').css('background-image', 'none')
 
                 // 显示图层
                 function updateLayer() {
                     for (var i = 0; i < 2; i++) {
-                        var layer = document.getElementById('layer-preview-' + (i + 1));
-                        var ctx = layer.getContext("2d");
-                        ctx.clearRect(0, 0, 500, 500);
-                        ctx.drawImage(db.layers[i].canvas, 0, 0, 500, 500, 0, 0, 100, 100);
+                        var layer = document.getElementById('layer-preview-' + (i + 1))
+                        var ctx = layer.getContext("2d")
+                        ctx.clearRect(0, 0, 500, 500)
+                        ctx.drawImage(db.layers[i].canvas, 0, 0, 500, 500, 0, 0, 100, 100)
                     }
                 }
 
@@ -808,91 +863,108 @@
                         btn: false,
                         size: ['500px'],
                         position:  { x: 'leftEdge', y: 'bottomEdge' }
-                    });
+                    })
 
-                    updateLayer();
+                    updateLayer()
 
                     // 水印 TODO
                 }
 
                 $('#layer').on('click', function (e) {
-                    e.preventDefault();
-                    showLayer();
-                });
+                    e.preventDefault()
+                    showLayer()
+                })
 
                 $('#select2').on('click', function (e) {
-                    e.preventDefault();
-                    db.select();
-                });
+                    e.preventDefault()
+                    db.select()
+                })
 
                 $('#select').on('click', function (e) {
-                    e.preventDefault();
-                    db.usePlugin('select');
-                });
+                    e.preventDefault()
+                    db.usePlugin('select')
+                })
 
                 // 钢笔工具
                 $('#pen-list').selectable({
                     item: '.btn'
-                });
+                })
 
                 $('#pen-draw').on('click', function () {
-                    db.setPenMode(1);
-                });
+                    db.setPenMode(1)
+                })
                 $('#pen-point').on('click', function () {
-                    db.setPenMode(2);
-                });
+                    db.setPenMode(2)
+                })
                 $('#pen-delete').on('click', function () {
-                    db.setPenMode(3);
-                });
+                    db.setPenMode(3)
+                })
                 $('#pen-add').on('click', function () {
-                    db.setPenMode(4);
-                });
+                    db.setPenMode(4)
+                })
                 $('#pen-move').on('click', function () {
-                    db.setPenMode(5);
-                });
+                    db.setPenMode(5)
+                })
 
-                $('#quick-help').on('click', function (e) {
-                    e.preventDefault();
-                    bootstro.start('.bootstro', {
-                        nextButtonText: '继续 >>',
-                        prevButtonText: '<< 返回',
-                        finishButtonText: '关闭'
-                    });
-                });
                 $('#help').on('click', function () {
                     ui.frame('help.html', {
                         title: '帮助',
                         //maxmin: true
-                    });
-                });
+                    })
+                })
 
                 $('#about').on('click', function () {
                     ui.alert('在线涂鸦 v17.5.3', {
                         shade: false,
                         icon: 'icon icon-info'
-                    });
-                });
+                    })
+                })
 
                 $('#version').on('click', function () {
                     ui.frame('/draw/version.html', {
                         title: '帮助',
                         size: ['600px', '500px']
                         //maxmin: true
-                    });
-                });
+                    })
+                })
 
                 $('#play-box-close').on('click', function (e) {
-                    e.preventDefault();
-                    $('#play-box').hide();
+                    e.preventDefault()
+                    $('#play-box').hide()
                 })
             },
-            test() {
-                this.$router.push('/about')
+            showFilterDialog() {
+                this.filterBoxVisible = true
+            },
+            quickHelp() {
+                bootstro.start('.bootstro', {
+                    nextButtonText: '继续 >>',
+                    prevButtonText: '<< 返回',
+                    finishButtonText: '关闭'
+                })
+            },
+            setFilter(filter) {
+                this.db.filter(filter.name)
+                this.filterBoxVisible = false
+            }
+        },
+        watch: {
+            strokeWidth() {
+                this.db.setWidth(this.strokeWidth)
+            },
+            paintOpacity() {
+                this.db.setOpacity(this.paintOpacity / 100)
             }
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .my-slider {
+        position: relative;
+        top: 6px;
+        float: left;
+        width: 210px;
+    }
+    
 </style>
