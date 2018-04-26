@@ -20,7 +20,6 @@
                                 文件 <i class="icon icon-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a id="open" href="#">打开</a></li>
                                 <li><a id="new" href="#">新建</a></li>
                                 <li><a id="save" href="#"><!--<i class="draw-icon draw-icon-save"></i>--> 保存</a></li>
                                 <li><a id="download" href="#" download="picture.png"><!--<i class="draw-icon draw-icon-download"></i>--> 下载</a></li>
@@ -43,17 +42,14 @@
                                 <li>
                                     <router-link to="/help" target="_blank">帮助</router-link>
                                 </li>
-                                <li>
-                                    <a href="#" @click.prevent="quickHelp">快速导航</a>
-                                </li>
-                                <!--<li><a id="version" href="#">版本介绍</a></li>-->
                                 <li><a id="about" href="#">关于</a></li>
                                 <li>
                                     <a href="http://tool.yunser.com" target="_blank">更多工具</a>
                                 </li>
                             </ul>
                         </li>
-                        <!--<li class="nav-item"><a class="nav-link" href="">链接</a> </li>
+                        <li class="nav-item"><a class="nav-link" href="#" @click.prevent="link">关联其他应用</a> </li>
+                        <!-- <li class="nav-item"><a class="nav-link" href="">链接</a> </li>
                         <li class="nav-item navbar-form">
                             <button id="insert-text" class="btn btn-info" href="#undo">文字</button>
                             <button id="insert-img" class="btn btn-info" href="#undo"><i class="glyphicon glyphicon-arrow-left"></i> 图片</button>
@@ -78,7 +74,7 @@
         </header>
         <!-- /头部 -->
         <div class="layout-body">
-            <div id="tool-box" class="tool-box bootstro" data-bootstro-width="200px" data-bootstro-title="工具栏" data-bootstro-content="这里有常用的工具" data-bootstro-placement="right">
+            <div id="tool-box" class="tool-box">
                 <h4 class="title">常用</h4>
                 <div class="tool-list">
                     <button class="btn btn-default" data-type="pointer" type="button" data-toggle="tooltip" title="移动图像"><i class="draw-icon draw-icon-pointer"></i></button>
@@ -125,7 +121,7 @@
                 </div>-->
             </div>
             <div id="workplace-box" class="workplace-box">
-                <div id="workplace" class="workplace bootstro"  data-bootstro-step='1' data-bootstro-width="200px" data-bootstro-title="编辑区" data-bootstro-content="可以在这里涂鸦、修图" data-bootstro-placement="right">
+                <div id="workplace" class="workplace">
                     <div id="drawboard" class="drawboard">
                         <div id="cut-box" class="cut-box">
                             <div class="cut-overlay-top"></div>
@@ -162,7 +158,7 @@
                             <div class="form-horizontal">
                                 <div class="form-groups">
                                     <h4 class="title">工具</h4>
-                                    <div class="btn-group bootstro"  data-bootstro-step='3' data-bootstro-width="200px" data-bootstro-title="" data-bootstro-content="点击回放按钮，可以回顾作图过程哦" data-bootstro-placement="left">
+                                    <div class="btn-group">
                                         <a id="undo" class="btn btn-default" data-toggle="tooltip" title="撤销"><i class="draw-icon draw-icon-undo"></i></a>
                                         <a id="redo" class="btn btn-default" data-toggle="tooltip" title="重做"><i class="draw-icon draw-icon-redo"></i></a>
                                         <a id="clear" class="btn btn-default" data-toggle="tooltip" title="清除"><i class="draw-icon draw-icon-clear"></i></a>
@@ -307,24 +303,6 @@
                 </div>
             </form>
         </div>
-        <div id="open-dialog" class="open-dialog">
-            <ul id="file-list" class="file-list">
-                <li class="list-item" v-for="file in files">
-                    <a class="link" href="#">
-                        <img class="img" :src="file">
-                    </a>
-                </li>
-
-                <!-- <li class="list-item"><a class="link" href="#"><img class="img" src="/static/img/demo1.jpg"></a>  </li>
-                <li class="list-item"><a class="link" href="#"><img class="img" src="/static/img/demo2.png"></a>  </li>
-                <li class="list-item"><a class="link" href="#"><img class="img" src="/static/img/demo3.jpg"></a>  </li>
-                <li class="list-item"><a class="link" href="#"><img class="img" src="/static/img/demo5.jpg"></a>  </li> -->
-            </ul>
-            <div id="drop-box" class="drop-box">
-                <button id="open-dialog-file" class="btn btn-primary" type="button">选择文件</button>
-                <div class="tip">可将图片拖拽到这里或者直接将图片拖到画板</div>
-            </div>
-        </div>
         <div id="color-dialog" class="color-dialog"></div>
 
         <!-- 剪切右键菜单 -->
@@ -409,17 +387,12 @@
 
 <script>
     /* eslint-disable */
+    const Intent = window.Intent
 
     export default {
         data () {
             return {
                 dialog: false,
-                files: [
-                    '/static/img/demo1.jpg',
-                    '/static/img/demo2.png',
-                    '/static/img/demo3.jpg',
-                    '/static/img/demo5.jpg'
-                ],
                 filterBoxVisible: false,
                 strokeWidth: 1,
                 paintOpacity: 100,
@@ -608,46 +581,6 @@
                     var type = $(this).data('type')
                     db.usePlugin(type)
                 })
-
-                $('#drop-box')[0].addEventListener('drop', function (e) {
-                    e.stopPropagation()
-                    e.preventDefault()
-
-                    var fileList = e.dataTransfer.files;　　//获取拖拽文件
-                    db.loadImageFile(fileList[0]); // 这里只取拖拽的第一个，实际中你可以遍历处理file列表
-                    $('#open-dialog').dialog('hide')
-                }, false)
-                $('#drop-box')[0].addEventListener('dragover', function(e) {
-                    e.stopPropagation()
-                    e.preventDefault()
-                }, false)
-                $('#file-list').on('click', '.link', function () {
-                    var img = $(this).find('img')[0]
-                    db.open(img)
-                    $('#open-dialog').dialog('hide')
-                })
-                $('#open-dialog-file').on('click', function () {
-                    var $fileInput = $('<input type="file">')
-                    $(document.body).append($fileInput)
-                    $fileInput.on('change', function () {
-                        if ($(this).val()) {
-                            console.log('有数据')
-                            var fileList = this.files;　　//获取拖拽文件
-                            db.loadImageFile(fileList[0])
-                            $('#open-dialog').dialog('hide')
-                        }
-                    })
-                    $fileInput.hide()
-                    $fileInput.trigger('click')
-                })
-                $('#open').on('click', function (e) {
-                    e.preventDefault()
-                    $('#open-dialog').dialog({
-                        title: '打开',
-                        btn: false
-                    })
-                })
-
                 $('#new').on('click', function (e) {
                     e.preventDefault()
 
@@ -932,20 +865,34 @@
                     e.preventDefault()
                     $('#play-box').hide()
                 })
+
+                this.initWebIntent()
             },
             showFilterDialog() {
                 this.filterBoxVisible = true
             },
-            quickHelp() {
-                bootstro.start('.bootstro', {
-                    nextButtonText: '继续 >>',
-                    prevButtonText: '<< 返回',
-                    finishButtonText: '关闭'
-                })
-            },
             setFilter(filter) {
                 this.db.filter(filter.name)
                 this.filterBoxVisible = false
+            },
+            initWebIntent() {
+                if (window.intent) {
+                    this.db.loadDataUrl(window.intent.data)
+                }
+            },
+            link() {
+                let dataUrl = this.db.getDataUrl()
+                let intent = new Intent({
+                    action: 'http://webintent.yunser.com/?',
+                    type: 'image/*',
+                    data: dataUrl
+                })
+                navigator.startActivity(intent, data => {
+                    console.log('成功')
+                    this.db.loadDataUrl(data)
+                }, data => {
+                    console.log('失败')
+                })
             }
         },
         watch: {

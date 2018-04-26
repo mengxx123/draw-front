@@ -563,7 +563,7 @@ fn.up = function (potx, poty, e) {
   }
 }
 
-fn.save = function () {
+fn.getDataUrl = function () {
   var that = this
   // 存储图层信息
   var layers = []
@@ -586,12 +586,18 @@ fn.save = function () {
     that.ctx2.fillRect(0, 0, that.width, that.height)
   }
   that.ctx2.drawImage(that.layer.canvas, 0, 0, that.width, that.height)
-  $('#download')[0].href = that.layer2.canvas.toDataURL('image/png')
+  let dataUrl = that.layer2.canvas.toDataURL('image/png')
   that.layer2.clearRect()
   that.layer2.show()
 
   // 播放操作记录
   storage.setItem('log', that.log)
+  return dataUrl
+}
+
+fn.save = function () {
+  let dataUrl = this.getDataUrl()
+  $('#download')[0].href = dataUrl
 }
 
 fn.small = function () {

@@ -23,6 +23,18 @@ DrawBoard.fn.loadImageFile = function (file) {
   reader.readAsDataURL(file)
 }
 
+DrawBoard.fn.loadDataUrl = function (dataUrl) {
+  let oImg = document.createElement('img')
+  oImg.onload = () => {
+    this.canvasSize(oImg.width, oImg.height)
+    // that.ctx.drawImage(oImg , 0 ,0 , oImg.width , oImg.height , 0 ,0 , that.width, that.height)
+    this.ctx.drawImage(oImg, 0, 0, oImg.width, oImg.height, 0, 0, oImg.width, oImg.height)
+    // oDropBox.appendChild(oImg)
+    this.storage()
+  }
+  oImg.src = dataUrl
+}
+
 DrawBoard.fn.dropImage = function () {
   var that = this
 
